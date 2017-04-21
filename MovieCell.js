@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Image,
 } from 'react-native';
 
 import * as api from './api'

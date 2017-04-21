@@ -1,34 +1,35 @@
 import React from 'react';
-import Movies from './Movies';
 import {
   Navigator,
   Text,
   View,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const navBarHeight = 60;
-const navBarStyle = {
-  height: navBarHeight,
-  backgroundColor: 'rgb(250, 117, 96)'
-};
+import Movies from './Movies';
+import MovieDetails from './MovieDetails';
+import NetworkIndicator from './NetworkIndicator';
 
-const NavMovies = ({ onNavChange }) => (
+const NavMovies = ({ type, onNavChange }) => (
   <Navigator
-    style={{ paddingTop: navBarHeight }}
     initialRoute={{ key: 'movies' }}
     renderScene={(route, navigator) => {
       onNavChange(navigator);
+      let mainComponent = null;
       if (route.key === 'movies') {
-        return <Movies onSelectMovie={movie => navigator.push({ key: 'details', movie })} />
+        mainComponent = <Movies type={type} onSelectMovie={movie => navigator.push({ key: 'details', movie })} />
       } else {
-        return (
-          <View style={{ flex: 1, backgroundColor: 'rgb(230, 230, 232)' }}>
-            <Text>Details view</Text>
-            <Text>{route.movie.title}</Text>
-          </View>
-        );
+        mainComponent = <MovieDetails movie={route.movie} />;
       }
+
+      return (
+        <View style={{ flex: 1 }}>
+          <NetworkIndicator />
+          {mainComponent}
+        </View>
+      );
     }}
     configureScene={() => Navigator.SceneConfigs.HorizontalSwipeJump }
     navigationBar={
@@ -38,25 +39,24 @@ const NavMovies = ({ onNavChange }) => (
             if (route.key === 'movies') return null
             return (
               <TouchableOpacity onPress={() => navigator.pop()}>
-                <Text>Back</Text>
+                <View style={{ flexGrow: 1, alignItems: 'center', flexDirection: 'row' }}>
+                  <Icon name='chevron-left' size={14} />
+                  <Text style={{ fontSize: 10 }}>Back</Text>
+                </View>
               </TouchableOpacity>
-            )
+            );
           },
           RightButton: () => {},
-          Title: (route) => {
-            if (route.key === 'movies') {
-              return <Text>Now Playing</Text>
-            }
-            return null
-          },
+          Title: () => {},
         }}
-        style={navBarStyle}
+        style={{ height: 15, marginTop: Platform.OS === 'android' ? 0 : -20 }}
       />
     }
   />
 )
 
 NavMovies.propTypes = {
+  type: React.PropTypes.oneOf(['NOW_PLAYING', 'TOP_RATED']).isRequired,
   onNavChange: React.PropTypes.func,
 };
 

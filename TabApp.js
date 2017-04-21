@@ -19,8 +19,13 @@ class TabApp extends Component {
   }
 
   onHardwareBackPress = () => {
-    if (this.currentTab === 0 && this.navRef && this.navRef.getCurrentRoutes().length > 1) {
-      this.navRef.pop();
+    if (this.currentTab === 0 && this.navRefs.nowPlaying &&
+        this.navRefs.nowPlaying.getCurrentRoutes().length > 1) {
+      this.navRefs.nowPlaying.pop();
+      return true;
+    } else if (this.currentTab === 1 && this.navRefs.topRated &&
+               this.navRefs.topRated.getCurrentRoutes().length > 1) {
+      this.navRefs.topRated.pop();
       return true;
     }
     return false;
@@ -32,7 +37,7 @@ class TabApp extends Component {
     }
   }
 
-  navRef = null
+  navRefs = {}
 
   currentTab = 0
 
@@ -44,8 +49,16 @@ class TabApp extends Component {
         onChangeTab={({ i }) => (this.currentTab = i)}
         renderTabBar={() => <DefaultTabBar />}
       >
-        <NavMovies tabLabel='Now Playing' onNavChange={nav => (this.navRef = nav)} />
-        <Text tabLabel='Top Rated'>Top Rated</Text>
+        <NavMovies
+          tabLabel='Now Playing'
+          type={'NOW_PLAYING'}
+          onNavChange={nav => (this.navRefs.nowPlaying = nav)}
+        />
+        <NavMovies
+          tabLabel='Top Rated'
+          type={'TOP_RATED'}
+          onNavChange={nav => (this.navRefs.topRated = nav)}
+        />
       </ScrollableTabView>
     );
   }
