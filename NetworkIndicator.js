@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   NetInfo,
   View,
+  TouchableOpacity,
 } from 'react-native';
 
 import NotificationBar from './NotificationBar';
@@ -33,7 +34,9 @@ class NetworkIndicator extends Component {
     return (
       <View>
         {this.state.visible ? (
-          <NotificationBar type='ALERT' message={message} />
+          <TouchableOpacity onPress={() => this.setState({ visible: false })} >
+            <NotificationBar type='ALERT' message={message} />
+          </TouchableOpacity>
         ) : null}
       </View>
     );

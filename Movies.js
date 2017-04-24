@@ -91,7 +91,9 @@ class Movies extends Component {
     return (
       <View style={styles.container}>
         {this.state.networkError && (
-          <NotificationBar message={'Network Error'} type='ALERT'/>
+          <TouchableOpacity onPress={() => this.setState({ networkError: false })}>
+            <NotificationBar message={'Network Error'} type='ALERT' color='#D32F2F'/>
+          </TouchableOpacity>
         )}
         <ListView
           style={styles.container}
