@@ -40,8 +40,8 @@ class MovieDetails extends Component {
           const { width, height } = nativeEvent.layout;
           const orientation = width > height ? LANDSCAPE : PORTRAIT;
           this.setState({
-            width: width - 22, // to account for padding and border
-            height: height - 22,
+            width: width - 32, // to account for padding and border
+            height: height - 32,
             orientation
           });
         }}
@@ -58,7 +58,7 @@ class MovieDetails extends Component {
         <View style={styles.textContainer}>
           <Text style={styles.title}>{movie.title}</Text>
           <Text style={styles.overview}>{movie.overview}</Text>
-          <Text>Released on: {movie.release_date}</Text>
+          <Text style={styles.releaseDate}>Released on: {movie.release_date}</Text>
         </View>
       </View>
     );
@@ -69,25 +69,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    paddingLeft: 10,
-    paddingRight: 10,
-    paddingBottom: 10,
-    paddingTop: 15,
+    padding: 15,
     backgroundColor: '#FFFFFF',
   },
   textContainer: {
     flex: 1,
     flexDirection: 'column',
-    borderWidth: 1,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'rgb(0, 0, 0)',
+    marginBottom: 5,
   },
   overview: {
     fontSize: 14,
     color: 'rgb(150, 150, 150)',
+    marginBottom: 5,
   },
   backdrop: {
     marginBottom: 10,
@@ -98,6 +96,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     width: 200,
     height: 200,
+  },
+  releaseDate: {
+    fontSize: 12,
+    color: '#212121',
   }
 });
 

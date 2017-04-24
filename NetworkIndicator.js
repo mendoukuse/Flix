@@ -13,21 +13,14 @@ class NetworkIndicator extends Component {
   }
 
   componentDidMount() {
-    NetInfo.addEventListener('change', this.handleConnectionInfoChange);
-    NetInfo.isConnected.fetch().then((isConnected) => {
-      if (!isConnected) {
-        this.setState({ visible: true, message: 'Network offline' });
-      }
-    }).catch((error) => {});
+    NetInfo.isConnected.addEventListener('change', this.handleConnectionInfoChange);
   }
 
   componentWillUnmount() {
-    NetInfo.removeEventListener('change', this.handleConnectionInfoChange);
+    NetInfo.isConnected.removeEventListener('change', this.handleConnectionInfoChange);
   }
 
-  handleConnectionInfoChange = (connectionInfo) => {
-    const isConnected = connectionInfo.toLowerCase() != 'none';
-
+  handleConnectionInfoChange = (isConnected) => {
     this.setState({
       visible: !isConnected,
       message: isConnected ? '' : 'Network offline',

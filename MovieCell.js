@@ -34,24 +34,23 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     padding: 10,
-    borderWidth: 1,
-    borderColor: 'rgb(99, 102, 70)',
+    borderBottomWidth: 1,
+    borderColor: '#757575',
   },
   textContainer: {
     flex: 1,
     flexDirection: 'column',
-    borderWidth: 1,
-    borderColor: 'rgb(10, 78, 184)',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'rgb(0, 0, 0)',
+    marginBottom: 2
   },
   overview: {
     fontSize: 12,
-    color: 'rgb(150, 150, 150)',
+    color: '#757575',
   },
   poster: {
     marginRight: 10,

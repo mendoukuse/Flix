@@ -7,7 +7,7 @@ import {
 
 import Icon from 'react-native-vector-icons/Octicons';
 
-function NotificationBar({ message, type }) {
+function NotificationBar({ message, type, color = '#512DA8' }) {
   let icon = null;
 
   if (type === 'ALERT') {
@@ -16,7 +16,7 @@ function NotificationBar({ message, type }) {
     );
   }
   return (
-    <View style={styles.alert}>
+    <View style={[styles.alert, { backgroundColor: color }]}>
       <View style={styles.alertText}>
         {icon}
         <Text style={styles.notification}>{message}</Text>
@@ -25,11 +25,17 @@ function NotificationBar({ message, type }) {
   );
 }
 
+NotificationBar.propTypes = {
+  color: React.PropTypes.string,
+  message: React.PropTypes.string,
+  type: React.PropTypes.oneOf(['ALERT', 'DEFAULT'])
+};
+
 const styles = StyleSheet.create({
   alert: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 20,
+    height: 24,
     backgroundColor: '#512DA8',
   },
   alertText: {
